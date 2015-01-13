@@ -24,11 +24,11 @@ def find_replace(head_folder, search_string, replacement_string=None):
                 '%s\n' % dirs
 
         for filename in files:
-            print colored('File: ', 'magenta', attrs=['bold']), \
-                '%s' % filename
-
             if not filename.endswith('.py'):
                 continue
+
+            print colored('File: ', 'magenta', attrs=['bold']), \
+                '%s' % filename
 
             file_path = os.path.join(root, filename)
             find_replace_for_file(file_path, search_string, replacement_string)
