@@ -18,17 +18,9 @@ def find_replace(head_folder, search_string, replacement_string=None):
     """
 
     for root, dirs, files in os.walk(head_folder):
-        print colored('In: ', 'cyan', attrs=['bold']), '%s' % root
-        if dirs:
-            print colored('Directories: ', 'magenta',  attrs=['bold']), \
-                '%s\n' % dirs
-
         for filename in files:
             if not filename.endswith('.py'):
                 continue
-
-            print colored('File: ', 'magenta', attrs=['bold']), \
-                '%s' % filename
 
             file_path = os.path.join(root, filename)
             find_replace_for_file(file_path, search_string, replacement_string)
@@ -38,14 +30,20 @@ def find_replace_for_file(file_path, search_string, replacement_string):
     lines = read_lines_from_file(file_path)
 
     match_indices = find_match_locations(lines, search_string)
+    if match_indices:
+        print colored('In: ', 'cyan', attrs=['bold']), '%s' \
+            % os.path.dirname(file_path)
+        print colored('File: ', 'magenta', attrs=['bold']), '%s' \
+            % os.path.basename(file_path)
 
-    display_matches(lines, match_indices, search_string)
-
-    if replacement_string:
-        replace_matches(lines, match_indices, search_string,
-                        replacement_string)
-        write_lines_to_file(file_path, lines)
+        display_matches(lines, match_indices, search_string)
         print ''
+
+        if replacement_string is not None:
+            replace_matches(lines, match_indices, search_string,
+                            replacement_string)
+            write_lines_to_file(file_path, lines)
+            print ''
 
 
 def find_match_locations(lines, search_string):
@@ -62,8 +60,6 @@ def display_matches(lines, match_indices, search_string):
                                                            attrs=['bold']))
         print colored('Match found', 'red', attrs=['bold']), \
             'in line %d: %s' % (i+1, out_line)
-
-    print ''
 
 
 def replace_matches(lines, match_indices, search_string, replacement_string):
