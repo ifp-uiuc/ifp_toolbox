@@ -70,7 +70,6 @@ class NoseDetector(object):
         #print self.detector
 
     def detect_noses(self, I):
-        print 'Detecting noses'
         noses = self.detector.detectMultiScale(I, self.scale_factor,
                                                self.min_neighbors)
         return noses
