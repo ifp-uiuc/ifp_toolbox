@@ -49,7 +49,7 @@ class FaceDetector(object):
 
     def crop_face_out(self, I, loc):
         (x, y, w, h) = loc
-        I_crop = I[y:y+h, x:x+h, :]
+        I_crop = I[y:y+h, x:x+w, :]
         return I_crop
 
 
