@@ -47,4 +47,7 @@ class RectangleSelector(object):
         self.ax.figure.canvas.draw()
 
     def get_coords(self):
-        return [self.x0, self.y0, self.x1, self.y1]
+        return [numpy.floor(self.x0),
+                numpy.floor(self.y0),
+                numpy.ceil(self.x1),
+                numpy.ceil(self.y1)]
